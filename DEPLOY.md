@@ -12,7 +12,7 @@
 
 ## 배포 순서
 
-1. GitHub에서 `BIGGGJUN/JARG-ADVANCED` 저장소를 Render에 연결합니다.
+1. GitHub에서 `bidulgi264/JARG-ADVANCED` 저장소를 Render에 연결합니다.
 2. Render Dashboard에서 **New > Blueprint**를 선택합니다.
 3. 이 저장소를 선택하면 루트의 `render.yaml`이 감지됩니다.
 4. 초기 생성 화면에서 아래 세 값을 입력합니다.
