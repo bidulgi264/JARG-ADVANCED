@@ -1,0 +1,157 @@
+openapi: 3.0.3
+info:
+  title: JARG Email Hint Response API
+  version: 1.0.0
+  description: >
+    Receives hint-request emails directly via /api/hint or through a mail
+    provider webhook via /inbound. The service only replies when the email
+    subject exactly matches HINT #<number>. Each problem returns one hint;
+    repeated requests receive the same hint.
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/health:
+    get:
+      summary: Liveness probe
+      responses:
+        "200":
+          description: Service is up
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok: { type: boolean }
+                  uptime: { type: number }
+  /api/hints:
+    get:
+      summary: List problems that have hints, without spoiler text
+      responses:
+        "200":
+          description: Problem metadata
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  problems:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ProblemMeta"
+  /api/hint:
+    post:
+      summary: Submit a simulated inbound hint email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HintRequest"
+      responses:
+        "200":
+          description: Hint or unknown-problem reply was produced
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HintResult"
+        "204":
+          description: Subject did not exactly match HINT #<number>; no reply was produced
+        "400":
+          description: Invalid sender address
+        "429":
+          description: Rate limit exceeded
+  /inbound:
+    post:
+      summary: Generic inbound-email webhook for mail providers
+      description: >
+        Accepts JSON or urlencoded form data. Field names are mapped flexibly:
+        from/sender, subject, and text/body-plain/plain. Request parsing only
+        uses the subject field.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/HintRequest"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HintRequest"
+      responses:
+        "200":
+          description: Reply produced
+        "204":
+          description: Subject did not exactly match HINT #<number>; no reply was produced
+        "429":
+          description: Rate limit exceeded
+  /api/requests:
+    get:
+      summary: Read the request log, admin only
+      security:
+        - adminToken: []
+      responses:
+        "200":
+          description: Stored request records
+        "401":
+          description: Missing or invalid admin token
+components:
+  securitySchemes:
+    adminToken:
+      type: apiKey
+      in: header
+      name: x-admin-token
+  schemas:
+    HintRequest:
+      type: object
+      required: [from]
+      properties:
+        from:
+          type: string
+          example: "Player <player@example.com>"
+        subject:
+          type: string
+          example: "HINT #10"
+          description: Must exactly match HINT #<number>, ignoring case and surrounding whitespace.
+        text:
+          type: string
+          description: Ignored for request parsing.
+          example: "Please send a hint."
+    ProblemMeta:
+      type: object
+      properties:
+        problem: { type: integer, example: 10 }
+        name: { type: string, example: "Signal" }
+        levels: { type: integer, example: 3 }
+    Hint:
+      type: object
+      properties:
+        problem: { type: integer }
+        name: { type: string }
+        level:
+          type: integer
+          description: Always 1 for the single public hint.
+        maxLevel:
+          type: integer
+          description: Internal catalog count; public responses always use level 1.
+        text: { type: string }
+        isFinal:
+          type: boolean
+          description: Internal catalog flag; not used for public escalation.
+    HintResult:
+      type: object
+      properties:
+        status: { type: integer }
+        ok: { type: boolean }
+        kind:
+          type: string
+          enum: [hint, ignored, unknown_problem]
+        reason:
+          type: string
+          example: "invalid_subject"
+        hint:
+          $ref: "#/components/schemas/Hint"
+        reply:
+          type: object
+          properties:
+            to: { type: string }
+            subject: { type: string }
+            text: { type: string }

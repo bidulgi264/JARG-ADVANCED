@@ -1,0 +1,75 @@
+.blackout-puzzle {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.blackout-riddle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font: 400 clamp(14px, 2vw, 21px)/1.7 "Courier New", Courier, monospace;
+  text-align: left;
+}
+
+.blackout-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: var(--background);
+}
+
+.blackout-puzzle.is-lit .blackout-mask {
+  background: radial-gradient(
+    circle 190px at var(--x, 50%) var(--y, 50%),
+    rgba(5, 5, 5, 0) 0%,
+    rgba(5, 5, 5, 0) 55%,
+    rgba(5, 5, 5, 0.96) 100%
+  );
+}
+
+.blackout-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.blackout-puzzle.is-lit .blackout-glow {
+  opacity: 1;
+  background: radial-gradient(
+    circle 190px at var(--x, 50%) var(--y, 50%),
+    rgba(255, 230, 160, 0.16) 0%,
+    transparent 70%
+  );
+}
+
+.flashlight {
+  position: fixed;
+  z-index: 6;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.flashlight.is-held {
+  width: 150px;
+  height: 150px;
+}
+
+.flashlight svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 8px rgba(255, 200, 80, 0.3));
+}
+
+.flashlight:focus-visible {
+  outline: 0;
+  filter: drop-shadow(0 0 12px rgba(255, 220, 120, 0.8));
+}
+
+.flashlight[hidden] {
+  display: none;
+}

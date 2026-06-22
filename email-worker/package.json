@@ -1,0 +1,24 @@
+{
+  "name": "jarg-email-response",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Hint auto-responder API for the JARG ARG. Receives hint-request emails (or provider webhook calls) and replies with progressive, per-problem hints.",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "poll": "node src/poller.js",
+    "test": "node --test --test-isolation=none"
+  },
+  "engines": {
+    "node": ">=18.13.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "imapflow": "^1.4.0",
+    "mailparser": "^3.9.9",
+    "nodemailer": "^8.0.11"
+  }
+}

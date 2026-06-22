@@ -1,0 +1,390 @@
+.panopticon-puzzle {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.eye-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(72vw, 720px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+.watching-eye {
+  --angle: calc(var(--eye-index) * 25.714deg);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(34px, 5.2vw, 62px);
+  height: clamp(18px, 2.8vw, 34px);
+  transform:
+    translate(-50%, -50%)
+    rotate(var(--angle))
+    translateX(min(31vw, 310px))
+    rotate(calc(var(--angle) * -1));
+}
+
+.eye-white {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 50% 12% 50% 12%;
+  background: rgba(242, 242, 232, 0.92);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.12);
+  opacity: var(--watch-level);
+  transform: scaleY(var(--watch-level));
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.eye-pupil {
+  width: 36%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #080808;
+  box-shadow: inset 0 0 0 4px rgba(115, 15, 15, 0.8);
+  transform: translate(var(--pupil-x, 0), var(--pupil-y, 0));
+  transition: transform 45ms linear;
+}
+
+.prison-button {
+  position: relative;
+  z-index: 10;
+  width: clamp(112px, 16vw, 166px);
+  height: clamp(138px, 20vw, 210px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(220, 220, 220, 0.9);
+  cursor: grab;
+  transition: filter 160ms ease, transform 150ms ease, opacity 150ms ease;
+}
+
+.prison-button:hover {
+  filter: brightness(1.28);
+}
+
+.prison-button:active {
+  cursor: grabbing;
+}
+
+.prison-button.is-unwatched {
+  cursor: pointer;
+}
+
+.prison-roof,
+.prison-base {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  height: 13%;
+  border: 2px solid rgba(225, 225, 225, 0.76);
+  background: #171717;
+}
+
+.prison-roof {
+  top: 0;
+  clip-path: polygon(50% 0, 100% 70%, 100% 100%, 0 100%, 0 70%);
+}
+
+.prison-base {
+  bottom: 0;
+}
+
+.prison-bars {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 12%;
+  bottom: 12%;
+  display: flex;
+  justify-content: space-between;
+  border-left: 3px solid currentColor;
+  border-right: 3px solid currentColor;
+}
+
+.prison-bars i {
+  width: 3px;
+  height: 100%;
+  background: currentColor;
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.12);
+}
+
+.panopticon-answer {
+  position: relative;
+  z-index: 15;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font: clamp(28px, 6vw, 76px)/1 "Courier New", Courier, monospace;
+}
+
+.celestial-orbit {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.celestial-orbit.is-visible {
+  opacity: 1;
+}
+
+.orbit-body {
+  position: fixed;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  font: 25px/1 Georgia, "Times New Roman", serif;
+  transform: translate(-50%, -50%);
+  transition: left 80ms linear, top 80ms linear, opacity 160ms ease;
+}
+
+.orbit-sun {
+  color: #f0d760;
+  text-shadow: 0 0 12px rgba(240, 215, 96, 0.72);
+  opacity: 1;
+}
+
+.orbit-moon {
+  color: #8fb8ff;
+  text-shadow: 0 0 12px rgba(94, 150, 255, 0.48);
+  opacity: 1;
+}
+
+.orbit-sun.is-fit-glow {
+  z-index: 2;
+  animation: orbit-sun-fit-glow 900ms ease-out both;
+}
+
+.orbit-moon.is-fit-glow {
+  z-index: 2;
+  animation: orbit-moon-fit-glow 900ms ease-out both;
+}
+
+@keyframes orbit-sun-fit-glow {
+  0% {
+    color: #f0d760;
+    text-shadow: 0 0 10px rgba(240, 215, 96, 0.55);
+    filter: drop-shadow(0 0 0 rgba(255, 225, 74, 0));
+    transform: translate(-50%, -50%) scale(1);
+  }
+  22% {
+    color: #fff29a;
+    text-shadow:
+      0 0 8px rgba(255, 255, 210, 1),
+      0 0 22px rgba(255, 232, 115, 0.98),
+      0 0 52px rgba(255, 214, 67, 0.86),
+      0 0 92px rgba(255, 184, 44, 0.46);
+    filter:
+      drop-shadow(0 0 12px rgba(255, 232, 115, 0.92))
+      drop-shadow(0 0 32px rgba(255, 184, 44, 0.58));
+    transform: translate(-50%, -50%) scale(1.58);
+  }
+  100% {
+    color: #f0d760;
+    text-shadow: 0 0 12px rgba(240, 215, 96, 0.72);
+    filter: drop-shadow(0 0 0 rgba(255, 225, 74, 0));
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes orbit-moon-fit-glow {
+  0% {
+    color: #8fb8ff;
+    text-shadow: 0 0 10px rgba(94, 150, 255, 0.5);
+    filter: drop-shadow(0 0 0 rgba(94, 150, 255, 0));
+    transform: translate(-50%, -50%) scale(1);
+  }
+  22% {
+    color: #b8e2ff;
+    text-shadow:
+      0 0 8px rgba(224, 245, 255, 1),
+      0 0 22px rgba(143, 198, 255, 0.98),
+      0 0 56px rgba(70, 134, 255, 0.82),
+      0 0 98px rgba(58, 95, 255, 0.48);
+    filter:
+      drop-shadow(0 0 12px rgba(143, 198, 255, 0.96))
+      drop-shadow(0 0 34px rgba(58, 95, 255, 0.64));
+    transform: translate(-50%, -50%) scale(1.58);
+  }
+  100% {
+    color: #8fb8ff;
+    text-shadow: 0 0 12px rgba(94, 150, 255, 0.48);
+    filter: drop-shadow(0 0 0 rgba(94, 150, 255, 0));
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.cursor-crusher {
+  position: fixed;
+  z-index: 14;
+  width: clamp(180px, 26vw, 280px);
+  aspect-ratio: 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.crusher-hand {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transform-origin: 50% 62%;
+}
+
+.cursor-crusher.is-active {
+  opacity: 1;
+}
+
+.cursor-crusher.is-active .crusher-ready {
+  animation: hand-ready-strike 390ms linear forwards;
+}
+
+.cursor-crusher.is-active .crusher-grab {
+  animation: hand-grab-strike 710ms 300ms linear forwards;
+}
+
+.panopticon-puzzle.is-grabbing .crusher-ready {
+  opacity: 0 !important;
+}
+
+.panopticon-puzzle.is-grabbing .crusher-grab {
+  opacity: 1 !important;
+}
+
+.panopticon-puzzle.is-grabbing {
+  animation: panopticon-crush-shake 380ms cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes panopticon-crush-shake {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  12% { transform: translate(-7px, 3px) rotate(-0.35deg); }
+  25% { transform: translate(8px, -4px) rotate(0.45deg); }
+  38% { transform: translate(-6px, -3px) rotate(-0.3deg); }
+  52% { transform: translate(6px, 4px) rotate(0.32deg); }
+  68% { transform: translate(-3px, 2px) rotate(-0.18deg); }
+  84% { transform: translate(2px, -1px) rotate(0.1deg); }
+}
+
+@keyframes hand-ready-strike {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  76% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+@keyframes hand-grab-strike {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.blood-stains {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.cursor-blood {
+  position: fixed;
+  width: clamp(150px, 23vw, 245px);
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.35) rotate(-9deg);
+  animation: blood-stain-fade 15s ease-out forwards;
+}
+
+@keyframes blood-stain-fade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.35) rotate(-9deg);
+  }
+  3% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1) rotate(-9deg);
+  }
+  14% {
+    opacity: 0.88;
+    transform: translate(-50%, -50%) scale(1) rotate(-9deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1) rotate(-9deg);
+  }
+}
+
+.punished-cursor {
+  position: fixed;
+  z-index: 15;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 23px solid #f0f0f0;
+  filter: drop-shadow(1px 2px 0 #000);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-34%, -18%) rotate(-38deg);
+  transform-origin: 50% 60%;
+}
+
+.panopticon-puzzle.is-punishing,
+.panopticon-puzzle.is-punishing *,
+.panopticon-puzzle.is-displaced,
+.panopticon-puzzle.is-displaced * {
+  cursor: none !important;
+}
+
+.punished-cursor.is-flying {
+  animation: crush-cursor-left 1150ms cubic-bezier(0.2, 0.75, 0.2, 1) forwards;
+}
+
+.panopticon-puzzle.is-grabbing .punished-cursor {
+  opacity: 0 !important;
+}
+
+@keyframes crush-cursor-left {
+  0%, 28% {
+    opacity: 1;
+    transform: translate(-34%, -18%) rotate(-38deg) scale(1);
+  }
+  29%, 62% {
+    opacity: 0;
+    transform: translate(-34%, -18%) rotate(-38deg) scale(1.45, 0.14);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--cursor-shift), -18%) rotate(-78deg) scale(0.62, 0.3);
+  }
+}

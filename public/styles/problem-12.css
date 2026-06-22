@@ -1,0 +1,134 @@
+.scope-puzzle {
+  display: grid;
+  place-items: center;
+}
+
+.scope-unit {
+  width: min(88vw, 620px);
+  padding: clamp(14px, 2.4vw, 22px);
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)),
+    #121212;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.scope-bezel {
+  display: grid;
+  gap: 10px;
+}
+
+.scope-screen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #040704;
+  box-shadow: inset 0 0 32px rgba(0, 0, 0, 0.8);
+}
+
+.scope-screen::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(120, 255, 120, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 255, 120, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  content: "";
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.scope-screen::after {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.03) 0,
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+  animation: scope-scan 6s linear infinite;
+  content: "";
+  pointer-events: none;
+}
+
+.scope-trace {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.scope-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.42);
+  font: 12px/1.2 "Courier New", Courier, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scope-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scope-status-text {
+  color: rgba(180, 24, 24, 0.82);
+}
+
+.scope-power-led {
+  position: relative;
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #4a1010;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  opacity: 0.14;
+  transition: opacity 40ms linear;
+}
+
+.scope-power-led::after {
+  position: absolute;
+  inset: 1px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ff6a6a 0%, #d42222 55%, #7a1010 100%);
+  box-shadow:
+    0 0 6px rgba(255, 70, 70, 0.85),
+    0 0 14px rgba(180, 24, 24, 0.55);
+  content: "";
+}
+
+.scope-channel {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+@keyframes scope-scan {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scope-screen::after {
+    animation: none;
+  }
+}

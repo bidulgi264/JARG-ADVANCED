@@ -1,0 +1,21 @@
+.boundary-puzzle {
+  display: grid;
+  gap: clamp(18px, 3vw, 28px);
+  justify-items: center;
+  width: min(92vw, 720px);
+}
+
+.boundary-map {
+  width: min(100%, 461px);
+  height: auto;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #fff;
+}
+
+.boundary-riddle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font: 400 clamp(15px, 2.2vw, 22px)/1.5 "Courier New", Courier, monospace;
+  text-align: center;
+  white-space: nowrap;
+}

@@ -1,0 +1,68 @@
+.menu-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 260px));
+  gap: clamp(28px, 7vw, 92px);
+  align-items: start;
+  max-width: min(86vw, 720px);
+  text-align: left;
+}
+
+.menu-card {
+  color: rgba(255, 255, 255, 0.78);
+  font-family: "Courier New", Courier, monospace;
+}
+
+.menu-card h2,
+.menu-card h3,
+.menu-card p,
+.menu-card ul {
+  margin: 0;
+}
+
+.menu-card h2 {
+  color: var(--text);
+  font-size: clamp(15px, 2vw, 20px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.menu-date {
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 13px;
+}
+
+.menu-card ul {
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(14px, 1.7vw, 18px);
+  line-height: 1.25;
+}
+
+.menu-card h3 {
+  margin-top: 34px;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.special-price {
+  margin-top: 12px;
+  color: var(--text);
+  font-size: clamp(16px, 2vw, 22px);
+  line-height: 1.2;
+}
+
+@media (max-width: 640px) {
+  .menu-board {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    max-height: 74vh;
+    overflow: auto;
+  }
+}

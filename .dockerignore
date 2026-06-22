@@ -1,0 +1,6 @@
+.git
+.env
+data
+email-worker
+test
+*.log

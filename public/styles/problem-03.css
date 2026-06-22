@@ -1,0 +1,17 @@
+.bottle-time {
+  display: grid;
+  place-items: center;
+}
+
+.bottle-timer {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font: clamp(42px, 9vw, 112px)/1 "Courier New", Courier, monospace;
+}
+
+.time-gold {
+  margin: 0;
+  color: var(--warning);
+  font: 400 clamp(34px, 8vw, 96px)/1.05 Georgia, "Times New Roman", serif;
+  letter-spacing: 0;
+}

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JARG Advanced</title>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/problem-01.css">
+    <link rel="stylesheet" href="styles/problem-02.css">
+    <link rel="stylesheet" href="styles/problem-03.css">
+    <link rel="stylesheet" href="styles/problem-04.css">
+    <link rel="stylesheet" href="styles/problem-05.css">
+    <link rel="stylesheet" href="styles/problem-06.css">
+    <link rel="stylesheet" href="styles/problem-07.css">
+    <link rel="stylesheet" href="styles/problem-08.css">
+    <link rel="stylesheet" href="styles/problem-09.css">
+    <link rel="stylesheet" href="styles/problem-10.css">
+    <link rel="stylesheet" href="styles/problem-11.css">
+    <link rel="stylesheet" href="styles/problem-12.css">
+    <link rel="stylesheet" href="styles/problem-13.css">
+    <link rel="stylesheet" href="styles/problem-14.css">
+    <link rel="stylesheet" href="styles/problem-15.css">
+    <link rel="stylesheet" href="styles/problem-16.css">
+    <link rel="stylesheet" href="styles/advanced.css?v=2">
+  </head>
+  <body>
+    <section class="auth-screen" id="authScreen" hidden>
+      <form class="auth-card" id="authForm">
+        <p class="auth-kicker">JARG ADVANCED</p>
+        <h1 id="authTitle">sign in</h1>
+        <label id="displayNameField" hidden>
+          <span>display name</span>
+          <input id="displayNameInput" name="displayName" minlength="2" maxlength="30" autocomplete="nickname">
+        </label>
+        <label><span>email</span><input id="emailInput" name="email" type="email" required autocomplete="email"></label>
+        <label><span>password</span><input id="passwordInput" name="password" type="password" minlength="8" required autocomplete="current-password"></label>
+        <p class="auth-error" id="authError" role="alert"></p>
+        <button type="submit" id="authSubmit">sign in</button>
+        <button class="auth-switch" type="button" id="authSwitch">create account</button>
+        <button class="auth-close" type="button" id="authClose">back to ARG</button>
+      </form>
+    </section>
+
+    <div class="account-bar" id="accountBar" hidden>
+      <span id="accountName"></span>
+      <button type="button" id="logoutButton">logout</button>
+    </div>
+    <main class="stage" aria-live="polite">
+      <div class="counter" id="counter">#0</div>
+
+      <section class="centerpiece" id="centerpiece">
+        <h1 class="lobby-title">ARG</h1>
+      </section>
+
+      <button class="help-button" id="helpButton" type="button" aria-expanded="false" aria-controls="helpPanel">?</button>
+
+      <aside class="help-panel" id="helpPanel" hidden>
+        <h2>commands</h2>
+        <p class="help-progress" id="clearRateText">clear 0/16 (0%)</p>
+        <dl>
+          <div>
+            <dt>#login</dt>
+            <dd>open login</dd>
+          </div>
+          <div>
+            <dt>start</dt>
+            <dd>첫 문제 시작</dd>
+          </div>
+          <div>
+            <dt>#list</dt>
+            <dd>문제 목록 열기</dd>
+          </div>
+          <div>
+            <dt>#help</dt>
+            <dd>도움말 페이지 열기</dd>
+          </div>
+          <div>
+            <dt>#번호</dt>
+            <dd>열린 문제로 이동</dd>
+          </div>
+          <div>
+            <dt>#lobby</dt>
+            <dd>로비로 이동</dd>
+          </div>
+          <div>
+            <dt>#reset</dt>
+            <dd>진행도 초기화</dd>
+          </div>
+          <div>
+            <dt>enter</dt>
+            <dd>정답 또는 명령 입력</dd>
+          </div>
+        </dl>
+      </aside>
+
+      <div class="problem-name" id="problemName">lobby</div>
+
+      <button class="next-button" id="nextButton" type="button" hidden>next</button>
+
+      <form class="answer-form" id="answerForm" autocomplete="off">
+        <label class="sr-only" for="answerInput">answer input</label>
+        <input
+          id="answerInput"
+          class="answer-input"
+          name="answer"
+          type="text"
+          inputmode="text"
+          placeholder="answer"
+          autofocus
+        >
+        <button class="answer-submit" type="submit" aria-label="submit answer">enter</button>
+      </form>
+    </main>
+
+    <script src="js/app.js?v=2"></script>
+  </body>
+</html>

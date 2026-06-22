@@ -1,0 +1,61 @@
+services:
+  - type: web
+    name: jarg-advanced
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    disk:
+      name: jarg-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: DB_FILE
+        value: /var/data/jarg.sqlite
+      - key: SESSION_DAYS
+        value: '30'
+      - key: ANSWER_PEPPER
+        generateValue: true
+      - key: EMAIL_WEBHOOK_SECRET
+        generateValue: true
+
+  - type: worker
+    name: jarg-email-responder
+    runtime: docker
+    plan: starter
+    rootDir: email-worker
+    dockerfilePath: ./email-worker/Dockerfile
+    dockerContext: ./email-worker
+    envVars:
+      - key: JARG_API_URL
+        fromService:
+          type: web
+          name: jarg-advanced
+          property: hostport
+      - key: JARG_EMAIL_SECRET
+        fromService:
+          type: web
+          name: jarg-advanced
+          envVarKey: EMAIL_WEBHOOK_SECRET
+      - key: HINT_FROM
+        sync: false
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: '587'
+      - key: SMTP_SECURE
+        value: 'false'
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: IMAP_HOST
+        value: imap.gmail.com
+      - key: IMAP_PORT
+        value: '993'
+      - key: IMAP_SECURE
+        value: 'true'
+      - key: IMAP_MAILBOX
+        value: INBOX
+      - key: IMAP_POLL_MS
+        value: '30000'

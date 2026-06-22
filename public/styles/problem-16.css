@@ -1,0 +1,274 @@
+.protect-puzzle {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.protect-arena {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 50% 116%, rgba(180, 24, 24, 0.22), transparent 48%),
+    #080a0c;
+  background-size: 42px 42px, 42px 42px, auto, auto;
+  box-shadow:
+    inset 0 0 64px rgba(0, 0, 0, 0.72),
+    0 20px 46px rgba(0, 0, 0, 0.35);
+  touch-action: none;
+  user-select: none;
+  transition: box-shadow 120ms ease;
+}
+
+.protect-arena.is-breached {
+  animation: protect-impact-shake 340ms ease-out;
+  box-shadow: inset 0 0 120px rgba(180, 24, 24, 0.74);
+}
+
+.protect-arena::before,
+.protect-arena::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.protect-arena::before {
+  inset: 0;
+  background: repeating-linear-gradient(180deg, transparent 0 5px, rgba(255, 255, 255, 0.012) 5px 6px);
+}
+
+.protect-arena::after {
+  inset: 14px;
+  border: 1px solid rgba(242, 216, 75, 0.08);
+}
+
+.protect-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+
+.protect-hud {
+  position: absolute;
+  z-index: 4;
+  top: clamp(22px, 3vw, 34px);
+  left: 50%;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(100px, 180px);
+  gap: 12px;
+  align-items: center;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.protect-timer {
+  color: rgba(255, 255, 255, 0.88);
+  font: 700 16px/1 "Courier New", Courier, monospace;
+  text-align: right;
+}
+
+.protect-progress {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.protect-progress i {
+  position: absolute;
+  inset: 0;
+  background: var(--warning);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.protect-plane {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 54px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: grab;
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.55));
+  touch-action: none;
+  will-change: transform;
+}
+
+.protect-plane:active {
+  cursor: grabbing;
+}
+
+.protect-plane:focus-visible {
+  outline: 1px solid rgba(242, 216, 75, 0.8);
+  outline-offset: 6px;
+}
+
+.protect-plane svg {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.protect-plane-body {
+  fill: #d9dde0;
+  stroke: #4d565d;
+  stroke-width: 1.5;
+}
+
+.protect-plane-glass {
+  fill: #242a2f;
+}
+
+.protect-shield {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 76px;
+  height: 76px;
+  border: 2px solid rgba(93, 235, 190, 0.92);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow:
+    inset 0 0 22px rgba(93, 235, 190, 0.26),
+    0 0 18px rgba(93, 235, 190, 0.48);
+  transform: translate(-50%, -50%) scale(0.7);
+  transition: opacity 100ms ease, transform 140ms ease;
+  pointer-events: none;
+}
+
+.protect-shield::before,
+.protect-shield::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.protect-shield::before {
+  inset: 6px;
+  border: 1px dashed rgba(255, 255, 255, 0.42);
+  animation: protect-shield-spin 3s linear infinite;
+}
+
+.protect-shield::after {
+  inset: -5px;
+  border: 1px solid rgba(93, 235, 190, 0.25);
+}
+
+.protect-plane.is-protected .protect-shield,
+.protect-plane.is-complete .protect-shield {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.protect-plane.is-protected .protect-plane-body,
+.protect-plane.is-complete .protect-plane-body {
+  fill: #effff9;
+  stroke: #5debbe;
+}
+
+.protect-plane.is-hit {
+  opacity: 0;
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.protect-result {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  color: rgba(255, 255, 255, 0.88);
+  font: 700 clamp(18px, 4vw, 32px)/1 "Courier New", Courier, monospace;
+  letter-spacing: 0;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.protect-result[hidden] {
+  display: none;
+}
+
+.problem-name.is-protect-token {
+  z-index: 20;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition: color 120ms ease, opacity 160ms ease, text-shadow 120ms ease;
+}
+
+.problem-name.is-protect-token.is-dragging {
+  color: var(--warning);
+  cursor: grabbing;
+  text-shadow: 0 0 16px rgba(242, 216, 75, 0.48);
+}
+
+.problem-name.is-protect-token.is-protect-used {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes protect-shield-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes protect-impact-shake {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  18% {
+    transform: translate3d(-10px, 5px, 0);
+  }
+
+  38% {
+    transform: translate3d(9px, -4px, 0);
+  }
+
+  58% {
+    transform: translate3d(-6px, 3px, 0);
+  }
+
+  78% {
+    transform: translate3d(4px, -2px, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .protect-puzzle {
+    width: 100%;
+  }
+
+  .protect-hud {
+    top: 22px;
+    grid-template-columns: 3.2rem minmax(84px, 34vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .protect-arena.is-breached,
+  .protect-shield::before {
+    animation: none;
+  }
+}

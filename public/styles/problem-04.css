@@ -1,0 +1,32 @@
+.perfect-fit {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.fit-line {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #19ff78;
+  box-shadow: 0 0 12px rgba(25, 255, 120, 0.46);
+}
+
+.fit-line-left {
+  left: calc(50vw - 480px);
+}
+
+.fit-line-right {
+  left: calc(50vw + 480px - 1px);
+}
+
+.perfect-answer {
+  margin: 0;
+  color: #19ff78;
+  font: 400 clamp(34px, 8vw, 96px)/1.05 "Courier New", Courier, monospace;
+  letter-spacing: 0;
+  text-shadow: 0 0 18px rgba(25, 255, 120, 0.35);
+}

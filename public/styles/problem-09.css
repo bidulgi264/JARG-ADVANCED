@@ -1,0 +1,11 @@
+.angle-puzzle {
+  display: grid;
+  place-items: center;
+}
+
+.angle-riddle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font: 400 clamp(16px, 2.2vw, 24px)/1.8 "Courier New", Courier, monospace;
+  text-align: left;
+}

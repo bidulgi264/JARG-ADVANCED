@@ -1,0 +1,382 @@
+.print-puzzle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: min(78vh, 620px);
+  padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 32px);
+}
+
+.print-screen-only:not([hidden]) {
+  display: block;
+}
+
+.print-dialog[hidden] {
+  display: none !important;
+}
+
+.print-page-wrap {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  width: min(92vw, 680px);
+}
+
+.print-document {
+  width: 100%;
+  padding: clamp(28px, 4vw, 44px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 248, 246, 0.98) 100%);
+  color: #171717;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+}
+
+.print-document-title {
+  margin: 0 0 10px;
+  font: 600 clamp(22px, 3vw, 32px)/1.2 Georgia, "Times New Roman", serif;
+}
+
+.print-document-byline {
+  margin: 0 0 22px;
+  color: rgba(23, 23, 23, 0.58);
+  font: italic 400 clamp(14px, 1.8vw, 17px)/1.4 Georgia, "Times New Roman", serif;
+}
+
+.print-poem p {
+  margin: 0 0 18px;
+  font: 400 clamp(15px, 2vw, 18px)/1.85 Georgia, "Times New Roman", serif;
+}
+
+.print-poem p:last-child {
+  margin-bottom: 0;
+}
+
+.print-document-text {
+  margin: 0 0 16px;
+  font: 400 clamp(15px, 2vw, 18px)/1.75 Georgia, "Times New Roman", serif;
+}
+
+.print-document-text:last-child {
+  margin-bottom: 0;
+}
+
+.print-document-emphasis {
+  font-size: clamp(18px, 2.4vw, 24px);
+  font-weight: 600;
+}
+
+.print-document-decoy {
+  display: none !important;
+}
+
+.print-only {
+  display: none;
+}
+
+.print-answer {
+  margin: 0;
+  color: #000;
+  font: 400 clamp(20px, 3vw, 30px)/1.7 "Courier New", Courier, monospace;
+}
+
+.print-launch {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f4f4f4;
+  cursor: pointer;
+  font: 24px/1 Arial, Helvetica, sans-serif;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.print-launch:hover,
+.print-launch:focus-visible {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.12);
+  outline: 0;
+  transform: translateY(-1px);
+}
+
+.print-dialog {
+  position: fixed;
+  z-index: 20;
+  width: min(92vw, 520px);
+  color: #1f1f1f;
+  font: 13px/1.35 "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+.print-dialog-panel {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: #f3f3f3;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.print-dialog-header,
+.print-dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #ececec;
+}
+
+.print-dialog-header {
+  border-bottom: 1px solid #d4d4d4;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.print-dialog.is-dragging .print-dialog-header {
+  cursor: grabbing;
+}
+
+.print-dialog-footer {
+  justify-content: flex-end;
+  border-top: 1px solid #d4d4d4;
+}
+
+.print-dialog-title {
+  margin: 0;
+  font: 600 15px/1.2 "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+.print-dialog-close {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #444;
+  cursor: pointer;
+  font: 20px/1 Arial, Helvetica, sans-serif;
+}
+
+.print-dialog-close:hover,
+.print-dialog-close:focus-visible {
+  background: rgba(0, 0, 0, 0.06);
+  outline: 0;
+}
+
+.print-dialog-body {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  background: #f8f8f8;
+}
+
+.print-dialog-row {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.print-dialog-label {
+  color: #555;
+  font-size: 12px;
+}
+
+.print-dialog-field {
+  min-width: 0;
+}
+
+.print-dialog-select,
+.print-dialog-input {
+  width: 100%;
+  height: 32px;
+  border: 1px solid #c8c8c8;
+  border-radius: 4px;
+  background: #fff;
+  color: #222;
+  padding: 0 10px;
+  font: inherit;
+}
+
+.print-dialog-select {
+  cursor: pointer;
+}
+
+.print-dialog-select:focus-visible,
+.print-dialog-input:focus-visible {
+  border-color: #0078d4;
+  outline: 1px solid #0078d4;
+}
+
+.print-dialog-radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.print-dialog-radios label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.print-dialog-copies {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 132px;
+}
+
+.print-dialog-input {
+  text-align: center;
+}
+
+.print-stepper {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid #c8c8c8;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  font: 700 14px/1 Arial, Helvetica, sans-serif;
+}
+
+.print-stepper:hover,
+.print-stepper:focus-visible {
+  border-color: #0078d4;
+  outline: 0;
+}
+
+.print-dialog-btn {
+  min-width: 88px;
+  height: 32px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font: 600 13px/1 "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+.print-dialog-btn-secondary {
+  border-color: #bdbdbd;
+  background: #fff;
+  color: #333;
+}
+
+.print-dialog-btn-secondary:hover,
+.print-dialog-btn-secondary:focus-visible {
+  background: #f5f5f5;
+  outline: 0;
+}
+
+.print-dialog-btn-primary {
+  border-color: #005ea6;
+  background: #0078d4;
+  color: #fff;
+}
+
+.print-dialog-btn-primary:hover,
+.print-dialog-btn-primary:focus-visible {
+  background: #106ebe;
+  outline: 0;
+}
+
+.print-dialog[data-status]::after {
+  content: attr(data-status);
+  position: absolute;
+  left: 50%;
+  bottom: -34px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  font: 12px/1.2 "Segoe UI", Arial, Helvetica, sans-serif;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .print-dialog-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+@media print {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    overflow: visible;
+    background: #fff;
+    color: #000;
+  }
+
+  .stage {
+    width: auto;
+    height: auto;
+    min-height: 0;
+    background: #fff;
+  }
+
+  .counter,
+  .help-button,
+  .help-panel,
+  .problem-name,
+  .answer-form,
+  .print-screen-only {
+    display: none !important;
+  }
+
+  .print-puzzle {
+    display: block;
+    min-height: 0;
+    padding: 0;
+  }
+
+  .print-document-real,
+  .print-document-decoy {
+    display: none !important;
+  }
+
+  .print-only.print-answer {
+    display: block;
+    margin: 0;
+    padding: 24mm 18mm;
+  }
+
+  body.print-via-dialog .print-only.print-answer {
+    display: none !important;
+  }
+
+  body.print-via-dialog .print-document-decoy {
+    display: block !important;
+    width: auto;
+    min-height: 100vh;
+    margin: 0;
+    padding: 24mm 18mm;
+    border: 0;
+    background: #fff;
+    box-shadow: none;
+    color: #000;
+  }
+
+  .centerpiece {
+    position: static;
+    inset: auto;
+    display: block;
+    padding: 0;
+    color: #000;
+  }
+}
