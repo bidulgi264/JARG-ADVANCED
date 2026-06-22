@@ -4,3 +4,5 @@ data/*.sqlite-wal
 data/*.sqlite-journal
 .env
 node_modules/
+.runtime/
+.tools/

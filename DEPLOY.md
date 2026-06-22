@@ -1,4 +1,45 @@
-# Render 배포
+# 배포 및 공개 실행
+
+## 권장: 무료 온디맨드 공개
+
+서버를 항상 켜둘 필요가 없다면 PC에서 JARG를 실행하고 Cloudflare Quick Tunnel로 공개하는 방식이 가장 단순합니다. 호스팅 비용과 Cloudflare 계정이 필요 없고, SQLite 진행률은 `data` 폴더에 계속 보존됩니다.
+
+```powershell
+cd D:\JARG\JARG_ADVANCED
+.\start-public.ps1
+```
+
+첫 실행 시 공식 Cloudflare `cloudflared` 실행 파일을 `.tools`에 내려받고 다음 프로세스를 백그라운드로 실행합니다.
+
+- JARG 웹/API (`http://127.0.0.1:3100`)
+- Gmail 이메일 폴러(자격 증명이 설정된 경우)
+- 임시 HTTPS 공개 터널
+
+출력되는 `https://...trycloudflare.com` 주소를 공유하면 됩니다. 실행할 때마다 주소가 바뀌며, PC가 켜져 있고 스크립트로 시작한 프로세스가 실행 중일 때만 접속할 수 있습니다.
+
+종료:
+
+```powershell
+.\stop-public.ps1
+```
+
+웹만 실행하려면 `.\start-public.ps1 -SkipEmail`을 사용합니다.
+
+### 이메일 자동응답기 준비
+
+첫 실행 후 `email-worker/.env`에 아래 값을 입력합니다.
+
+| 환경 변수 | 값 |
+| --- | --- |
+| `HINT_FROM` | `JARG Hint Bot <실제 Gmail 주소>` |
+| `SMTP_USER`, `IMAP_USER` | 실제 Gmail 주소 |
+| `SMTP_PASS`, `IMAP_PASS` | Gmail 앱 비밀번호 |
+
+Gmail 앱 비밀번호는 Google 계정에서 2단계 인증을 켠 뒤 발급합니다. 일반 로그인 비밀번호를 넣지 마세요. `JARG_EMAIL_SECRET`과 로컬 API 주소는 실행 스크립트가 자동으로 맞춥니다.
+
+Cloudflare는 Quick Tunnel을 테스트·개발 용도로 안내합니다. 소규모로 필요할 때만 여는 현재 사용 방식에 적합하지만, 고정 주소나 상시 운영 보장은 없습니다.
+
+## 선택 사항: Render 상시 배포
 
 이 저장소는 GitHub Pages가 아닌 Render Blueprint로 배포합니다. GitHub Pages는 Node 백엔드, SQLite 데이터베이스, Gmail IMAP 폴러를 실행할 수 없습니다.
 

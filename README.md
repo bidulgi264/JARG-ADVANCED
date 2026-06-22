@@ -2,7 +2,7 @@
 
 기존 JARG의 16개 퍼즐을 유지하면서 계정, 서버 정답 검증, SQLite 진행률, 문제 API와 힌트 사용 기록을 추가한 독립 프로젝트입니다. 기존 `JARG`, `EmailResponse` 폴더는 수정하지 않습니다.
 
-배포 방법은 [`DEPLOY.md`](./DEPLOY.md)를 참고하세요. 배포용 이메일 워커는 이 저장소의 `email-worker`에 함께 포함되어 있습니다.
+무료 공개 실행 및 Render 배포 방법은 [`DEPLOY.md`](./DEPLOY.md)를 참고하세요. 이메일 워커는 이 저장소의 `email-worker`에 함께 포함되어 있습니다.
 
 ## 실행
 
@@ -15,6 +15,14 @@ npm start
 ```
 
 브라우저에서 `http://localhost:3100`을 엽니다. 테스트는 `npm test`로 실행합니다.
+
+인터넷에 무료로 공개할 때는 Windows PowerShell에서 아래 명령을 실행합니다.
+
+```powershell
+.\start-public.ps1
+```
+
+Cloudflare Quick Tunnel 주소가 출력되며, 종료할 때는 `.\stop-public.ps1`을 실행합니다.
 
 운영 배포 전 `.env`의 `ANSWER_PEPPER`를 길고 무작위인 값으로 반드시 변경하세요. SQLite 파일은 기본적으로 `data/jarg-advanced.sqlite`에 생성됩니다.
 
